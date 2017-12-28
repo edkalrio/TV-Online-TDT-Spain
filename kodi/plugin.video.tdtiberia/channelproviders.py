@@ -28,20 +28,18 @@ class TvOnlineAPP:
         return processedChannelList
 
 
-class GitHubJSON:
+def GitHubJSON(includeDisabled = False):
     URL = "https://raw.githubusercontent.com/ruvelro/TV-Online-TDT-Spain/master/tv-spain.json"
-    def __init__(self, includeDisabled = False):
-        response = urllib2.urlopen(self.URL)
-        self.responseText = response.read()
-        self.channelList = json.loads(self.responseText)
-	self.includeDisabled =includeDisabled
+    processedChannelList = []
 
-    def retrieveList(self):
-        processedChannelList = []
-        for channel in self.channelList:
-            if self.includeDisabled or channel['enabled'] == True:
-                processedChannelList.append([channel['name'].encode('UTF-8'), channel['link_m3u8'].encode('ascii')])
-        return processedChannelList
+    response = urllib2.urlopen(URL)
+    responseText = response.read()
+    channelList = json.loads(responseText)
+    
+    for channel in channelList:
+	    if includeDisabled or channel['enabled']:
+	    	processedChannelList.append([channel['name'].encode('UTF-8'), channel['link_m3u8'].encode('ascii')])
+    return processedChannelList
 
 
 class GitHubMD:
@@ -82,5 +80,5 @@ if __name__ == "__main__":
     #cp1 = TvOnlineAPP()
     #cp2 = GitHubMD()
     cp2 = GitHubJSON(True)
-    print(cp2.retrieveList())
+    print(cp2)
     #CheckChannelList(cp1.retrieveList(), cp2.retrieveList())
