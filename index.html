@@ -40,6 +40,7 @@ new Vue({
 			const url = "https://cors-anywhere.herokuapp.com/https://www.apps4two.com/apps/tvonline/ch_channel.php"
 			const res = await fetch(url);
 			const json = await res.json();
+			this.tv = json;
 			for (let i = 0; i < json.length; i++) {
 				try {
 					/*const status_code = await fetch(json[i][7], { mode: "no-cors", timeout: 2000});*/
@@ -49,7 +50,6 @@ new Vue({
 					Vue.set(this.tv[i], 3, "KO")
 				}
 			}
-			this.tv = json;
 		}
 	},
 	mounted () {
