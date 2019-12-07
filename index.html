@@ -21,7 +21,7 @@
 			<th>URL</th>
 		</tr>
 		<tr v-for="i in tv">
-			<td>{{i[0]}}</td>
+			<td>{{i[3]}}</td>
 			<td>{{i[5]}}</td>
 			<td><a :href="i[7]">{{i[7]}}</a></td>
 		</tr>
@@ -44,9 +44,9 @@ new Vue({
 				try {
 					/*const status_code = await fetch(json[i][7], { mode: "no-cors", timeout: 2000});*/
 					const status_code = await axios.get(json[i][7], { mode: "no-cors", timeout: 2000 });
-					json[i][0] = "OK"
+					Vue.set(this.tv[i], 3, "OK")
 				} catch(e) {
-					json[i][0] = "KO"
+					Vue.set(this.tv[i], 3, "KO")
 				}
 			}
 			this.tv = json;
